@@ -75,46 +75,76 @@ This tutorial was tested with Confluent CLI v3.41.0.
 
 # Provision services for the demo
 
+## Checkout Code
+- Create a new folder on your computer and download the source code
+```Bash
+git clone https://github.com/griga23/shoe-store.git
+```
+Applies to Windows.
+
+## Change Folder
+- Open a terminal and go to the folder you downloaded the code, then run the following.
+```Bash
+cd ./terraform
+```
+Applies to Windows.
+
 ## Set environment variables
 - Add your API key to the Terraform variables by creating a tfvars file
 ```bash
-cat > $PWD/terraform/terraform.tfvars <<EOF
+cat > $PWD/terraform.tfvars <<EOF
 confluent_cloud_api_key = "{Cloud API Key}"
 confluent_cloud_api_secret = "{Cloud API Key Secret}"
 EOF
 ```
 
+Windows:
+```
+echo confluent_cloud_api_key = "{Cloud API Key}" >> terraform.tfvars
+echo confluent_cloud_api_secret = "{Cloud API Secret}" >> terraform.tfvars
+```
+
 ## Deploy via terraform
 run the following commands:
 ```Bash
-cd ./terraform
 terraform init
 terraform plan
 terraform apply
 terraform output -json
 ```
 
+Applies to Windows.
+
 Please check whether the terraform execution went without errors.
 
-There are two ways to continue, either over shell or over UI. If you want to start with the shell, please type:
+- It can take up to 11 minutes to run the terraform apply command.
+
+There are two ways to continue, either over shell (Unix / MAC OS only) or over UI. 
+
+## Shell
+If you want to start with the shell, please type:
 
 ```
 eval $(echo -e "confluent flink shell --compute-pool $(terraform output cc_compute_pool_name) --environment $(terraform output cc_hands_env)")
 ```
 
-You can copy the login instruction also from the UI.
+## UI
 
 To continue with the UI:
  - Access Confluent Cloud WebUI: https://confluent.cloud/login
- - Access your Environment: `flink_handson_terraform-XXXXXXXX`
+ - Access your Environment: `flink_handson_terraform-XXXXXXXX` (see screenshot)
  - Select tab `Flink (preview)`
  - Access your Flink Compute Pool: `standard_compute_pool-XXXXXXXX`
- - Click `Open SQL workspace`
- - Make sure to select:
+ - Click `Open SQL workspace` (see screenshot)
+ - Make sure to select: (see screenshot)
    - Catalog: `flink_handson_terraform-XXXXXXXX`
    - Database: `cc-handson-cluster`
 
 You deployed:
+
+![image](img/environment-cluster.png)
+
+![image](img/flink-pool-workspace.png)
 
 ![image](img/terraform_deployment.png)
 
